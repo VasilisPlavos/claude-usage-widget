@@ -138,13 +138,12 @@ omitted from the widget rather than rendered as 0%.
 - **Polling:** every **60s** while the widget is open (server value refreshes
   ~once/minute). Also fetch immediately on open, and refresh when a claude.ai tab
   regains focus (`visibilitychange`).
-- **Countdown:** "Resets in N min" is computed locally from
-  `session.resetsAt − now`, re-rendered every minute. Formatting rules:
-  - `> 60 min` → "Resets in Hh Mm" (or "Resets in N min" if you prefer flat
-    minutes — implementer's choice, documented in code).
-  - `1–60 min` → "Resets in N min".
+- **Countdown:** computed locally from `session.resetsAt − now`, re-rendered
+  every minute, using claude.ai's own wording (observed on the usage page):
+  - `>= 60 min` → "Resets in H hr M min" (e.g. "Resets in 3 hr 42 min").
+  - `1–59 min` → "Resets in N min" (e.g. "Resets in 42 min").
   - `< 1 min` → "Resets in <1 min".
-  - already passed → "Resetting…" (next poll will bring fresh values).
+  - already passed → "Resetting…" (next poll brings fresh values).
 - **Theme sync:** on open, read claude.ai's effective light/dark state from the
   page and set the PiP document's theme CSS variables to match. A
   `MutationObserver` on the page's theme indicator updates the widget live if the
@@ -197,7 +196,8 @@ omitted from the widget rather than rendered as 0%.
 
 - **Unit tests (Node, no browser):**
   - `usage-api` response parsing: full payload, `null` rows omitted, missing keys.
-  - `resets_at → "Resets in N min"` formatter: >60 min, 1–60 min, <1 min, passed.
+  - `resets_at → "Resets in …"` formatter: >=60 min ("H hr M min"), 1–59 min,
+    <1 min, passed.
 - **Manual verification checklist (README):** open/close via both launchers; theme
   toggle sync; signed-out state and recovery; 60s polling refresh; behavior with no
   claude.ai tab. (Document PiP + extension gestures aren't meaningfully unit-testable.)
@@ -225,6 +225,6 @@ claude-usage-pip/
 
 ## 11. Open questions
 
-None — all resolved during brainstorming. (Theme signal mechanism and the exact
-countdown formatting variant are implementation details to settle by inspection,
-isolated in single helpers.)
+None — all resolved during brainstorming. (The theme signal mechanism — which DOM
+attribute claude.ai uses to indicate light/dark — is an implementation detail to
+settle by inspection, isolated in a single helper.)
