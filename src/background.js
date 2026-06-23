@@ -1,10 +1,13 @@
-// Minimal service worker for the spike. Replaced by the full version in Task 8.
+const CLAUDE_MATCH = "https://claude.ai/*";
+
 chrome.action.onClicked.addListener(async (activeTab) => {
   const target = await pickClaudeTab(activeTab);
   if (!target) {
-    console.warn("[Claude Usage PiP] no claude.ai tab open");
+    await chrome.tabs.create({ url: "https://claude.ai/new" });
+    await flashBadge("↻", "Click the icon again to show usage");
     return;
   }
+  await clearBadge();
   try {
     await chrome.scripting.executeScript({
       target: { tabId: target.id },
@@ -19,6 +22,17 @@ async function pickClaudeTab(activeTab) {
   if (activeTab && activeTab.url && activeTab.url.startsWith("https://claude.ai/")) {
     return activeTab;
   }
-  const tabs = await chrome.tabs.query({ url: "https://claude.ai/*" });
-  return tabs[0] || null;
+  const tabs = await chrome.tabs.query({ url: CLAUDE_MATCH });
+  return tabs.find((t) => t.active) || tabs[0] || null;
+}
+
+async function flashBadge(text, title) {
+  await chrome.action.setBadgeText({ text });
+  await chrome.action.setBadgeBackgroundColor({ color: "#6c5ce7" });
+  if (title) await chrome.action.setTitle({ title });
+}
+
+async function clearBadge() {
+  await chrome.action.setBadgeText({ text: "" });
+  await chrome.action.setTitle({ title: "Toggle Claude usage widget" });
 }
