@@ -1,0 +1,18 @@
+<!doctype html>
+<html data-mode="light">
+<head><meta charset="utf-8"><title>Widget preview</title></head>
+<body>
+<script type="module">
+  import { mountWidget, renderUsage, renderMessage } from "../../src/widget.js";
+  const { card } = mountWidget(document);
+  const inMin = (m) => new Date(Date.now() + m * 60000);
+  renderUsage(card, {
+    session:   { pct: 53, resetsAt: inMin(42) },
+    allModels: { pct: 34, resetsAt: inMin(222) },
+    sonnet:    { pct: 8,  resetsAt: inMin(222) },
+  });
+  // To preview states, comment the above and try:
+  // renderMessage(card, "Open Claude and sign in to see usage.");
+</script>
+</body>
+</html>
