@@ -18,6 +18,17 @@ and "Sonnet only" — with live percentages and a session reset countdown.
 3. Click **Load unpacked** and select this folder.
 4. Open `https://claude.ai/` and sign in.
 
+## build
+
+  npm run build           # create dist/unpacked with current version
+
+## release
+
+  npm run release           # no bump:    1.0.0 → 1.0.0
+  npm run release patch     # patch bump: 1.0.0 → 1.0.1
+  npm run release minor     # minor bump: 1.0.0 → 1.1.0
+  npm run release major     # major bump: 1.0.0 → 2.0.0
+
 ## Use
 
 - Click the **Usage** button (bottom-right of claude.ai) **or** the extension's
