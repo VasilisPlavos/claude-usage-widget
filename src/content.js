@@ -2,7 +2,7 @@ import { fetchOrgId, fetchUsage } from "./usage-api.js";
 import { mountWidget, renderUsage, renderMessage } from "./widget.js";
 import { readClaudePalette, applyPalette, observeTheme } from "./theme.js";
 import { injectButton, setButtonActive } from "./button.js";
-import { initInlineButton } from "./inline-button.js";
+import { initInlineButton, setInlineButtonActive } from "./inline-button.js";
 
 const POLL_MS = 60000;
 
@@ -59,6 +59,7 @@ function handlePipClosed() {
   card = null;
   orgId = null;
   setButtonActive(false);
+  setInlineButtonActive(false);
 }
 
 async function open() {
@@ -79,6 +80,7 @@ async function open() {
     stopThemeObserver = observeTheme(syncTheme);
     renderMessage(card, "Loading…");
     setButtonActive(true);
+    setInlineButtonActive(true);
     pipWindow = win;
     await refresh();
     startTimers();
