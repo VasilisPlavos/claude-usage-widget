@@ -1,5 +1,5 @@
 const INLINE_BTN_ID = "claude-usage-pip-inline-btn";
-const USAGE_PATH = "/settings/usage";
+const USAGE_HASH = "#settings/usage";
 const OBSERVER_TIMEOUT_MS = 8000;
 
 const PIP_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -87,13 +87,13 @@ export function initInlineButton(onToggle) {
     removeBtn();
   }
 
-  if (location.pathname === USAGE_PATH) activate();
+  if (location.hash === USAGE_HASH) activate();
 
   window.navigation?.addEventListener("navigate", (e) => {
-    let path;
-    try { path = new URL(e.destination.url).pathname; } catch { return; }
+    let hash;
+    try { hash = new URL(e.destination.url).hash; } catch { return; }
     deactivate();
-    if (path === USAGE_PATH) {
+    if (hash === USAGE_HASH) {
       pendingTimer = setTimeout(activate, 150);
     }
   });
