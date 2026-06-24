@@ -1,0 +1,72 @@
+:root {
+  --brand: #D97757;
+  --brand-deep: #C2562F;
+  --cream: #F4EFE7;
+  --ink: #2B2A27;
+  --muted: #6B6B6B;
+  --card-bg: #FFFFFF;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+/* ---------- Screenshot canvas: 1280x800 ---------- */
+.shot {
+  width: 1280px; height: 800px;
+  background: radial-gradient(120% 120% at 50% -10%, #FBF6EF 0%, var(--cream) 55%, #EFE6D8 100%);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 64px 64px 80px;
+}
+.shot__caption {
+  font-size: 52px; font-weight: 800; color: var(--ink);
+  text-align: center; line-height: 1.15; max-width: 1000px;
+  margin-bottom: 48px; letter-spacing: -0.02em;
+}
+.shot__accent { color: var(--brand); }
+.device {
+  background: var(--card-bg); border-radius: 28px; overflow: hidden;
+  box-shadow: 0 40px 80px -20px rgba(43,42,39,.35), 0 0 0 1px rgba(43,42,39,.05);
+}
+.device img { display: block; max-width: 760px; height: auto; }
+.device.is-mock { background: transparent; box-shadow: none; }
+.shot .mock { box-shadow: 0 40px 80px -20px rgba(43,42,39,.35); }
+
+/* ---------- Faithful widget mock (fallback + promo art) ---------- */
+.mock {
+  width: 320px; background: var(--card-bg); color: var(--ink);
+  border-radius: 20px; padding: 22px 22px 24px; font-size: 15px;
+}
+.mock[data-mode="dark"] { background: #1F1E1C; color: #ECE9E3; }
+.mock__title { font-weight: 700; font-size: 16px; }
+.mock__sub { color: var(--muted); font-size: 13px; margin: 4px 0 16px; }
+.mock[data-mode="dark"] .mock__sub { color: #B9B4AC; }
+.mock__row { margin: 14px 0; }
+.mock__row-head { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+.mock__bar { height: 8px; border-radius: 99px; background: rgba(217,119,87,.18); overflow: hidden; }
+.mock[data-mode="dark"] .mock__bar { background: rgba(232,137,94,.22); }
+.mock__fill { height: 100%; background: var(--brand); border-radius: 99px; }
+
+/* ---------- Promo small: 440x280 ---------- */
+.promo-s {
+  width: 440px; height: 280px;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+  color: #FFF; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center; padding: 28px;
+}
+.promo-s img { width: 88px; height: 88px; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+.promo-s__name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.promo-s__tag { font-size: 16px; margin-top: 8px; opacity: .95; }
+
+/* ---------- Promo marquee: 1400x560 ---------- */
+.promo-m {
+  width: 1400px; height: 560px; display: flex; align-items: center;
+  background: radial-gradient(100% 140% at 0% 50%, #FBF6EF 0%, var(--cream) 60%, #ECDFCE 100%);
+  padding: 0 90px; gap: 72px;
+}
+.promo-m__art { flex: 0 0 auto; transform: scale(1.4); transform-origin: center; }
+.promo-m__art .mock { box-shadow: 0 40px 80px -20px rgba(43,42,39,.35); }
+.promo-m__copy { flex: 1 1 auto; }
+.promo-m__headline { font-size: 60px; font-weight: 800; color: var(--ink); line-height: 1.1; letter-spacing: -0.02em; max-width: 620px; }
+.promo-m__sub { font-size: 24px; color: var(--muted); margin-top: 20px; max-width: 560px; }
+.promo-m__brand { display: flex; align-items: center; gap: 14px; margin-top: 32px; }
+.promo-m__brand img { width: 48px; height: 48px; border-radius: 12px; }
+.promo-m__brand span { font-size: 20px; font-weight: 700; color: var(--ink); }
