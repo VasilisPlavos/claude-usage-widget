@@ -88,6 +88,8 @@ async function open() {
     console.error("[Claude Usage PiP] open failed:", err);
     card = null;
     pipWindow = null;
+    setButtonActive(false);
+    setInlineButtonActive(false);
   } finally {
     opening = false;
   }

@@ -21,9 +21,6 @@
       "run_at": "document_idle"
     }
   ],
-  "permissions": [
-    "scripting"
-  ],
   "host_permissions": [
     "https://claude.ai/*"
   ],
