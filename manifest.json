@@ -4,8 +4,20 @@
   "version": "1.0.0",
   "description": "Floating picture-in-picture widget showing your claude.ai usage.",
   "minimum_chrome_version": "116",
+  "icons": {
+    "16": "src/icon/icon-16.png",
+    "32": "src/icon/icon-32.png",
+    "48": "src/icon/icon-48.png",
+    "128": "src/icon/icon-128.png"
+  },
   "action": {
-    "default_title": "Toggle Claude Usage Widget Lite"
+    "default_title": "Toggle Claude Usage Widget Lite",
+    "default_icon": {
+      "16": "src/icon/icon-16.png",
+      "32": "src/icon/icon-32.png",
+      "48": "src/icon/icon-48.png",
+      "128": "src/icon/icon-128.png"
+    }
   },
   "background": {
     "service_worker": "src/background.js"
