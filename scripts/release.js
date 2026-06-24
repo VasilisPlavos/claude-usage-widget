@@ -37,13 +37,13 @@ if (shouldBump) {
 const version = pkg.version;
 execSync("node scripts/build.js", { cwd: ROOT, stdio: "inherit" });
 
-const zipPath = join(ROOT, "dist", `claude-usage-pip-v${version}.zip`);
+const zipPath = join(ROOT, "dist", `claude-usage-widget-lite-v${version}.zip`);
 const output = createWriteStream(zipPath);
 const archive = archiver("zip", { zlib: { level: 9 } });
 archive.on("error", (err) => { throw err; });
 archive.pipe(output);
 archive.directory(join(ROOT, "dist", "unpacked"), false);
 output.on("close", () =>
-  console.log(`dist/claude-usage-pip-v${version}.zip  (${archive.pointer()} bytes)`)
+  console.log(`dist/claude-usage-widget-lite-v${version}.zip  (${archive.pointer()} bytes)`)
 );
 archive.finalize();

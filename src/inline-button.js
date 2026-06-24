@@ -1,4 +1,4 @@
-const INLINE_BTN_ID = "claude-usage-pip-inline-btn";
+const INLINE_BTN_ID = "claude-usage-widget-lite-inline-btn";
 const USAGE_HASH = "#settings/usage";
 const OBSERVER_TIMEOUT_MS = 8000;
 const OPACITY_ACTIVE = "1";

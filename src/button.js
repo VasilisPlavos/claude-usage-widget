@@ -1,11 +1,13 @@
-const BUTTON_ID = "claude-usage-pip-button";
+import { ENV } from "./ENV.js";
+
+const BUTTON_ID = "claude-usage-widget-lite-button";
 
 export function injectButton(onClick) {
   if (document.getElementById(BUTTON_ID)) return;
   const btn = document.createElement("button");
   btn.id = BUTTON_ID;
   btn.type = "button";
-  btn.title = "Toggle Claude usage widget";
+  btn.title = `Toggle ${ENV.AppTitle}`;
   btn.textContent = "Usage Widget Lite";
   Object.assign(btn.style, {
     position: "fixed", right: "16px", bottom: "16px", zIndex: "2147483647",
