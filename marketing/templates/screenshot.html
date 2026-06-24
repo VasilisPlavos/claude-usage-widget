@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Store screenshot</title>
+<link rel="stylesheet" href="marketing.css">
+<!-- render: 1280x800 -->
+</head>
+<body data-render-width="1280" data-render-height="800">
+<div class="shot">
+  <div class="shot__caption" id="caption"></div>
+  <div class="device" id="device"></div>
+</div>
+<script>
+const SHOTS = {
+  "1": { caption: 'Your usage, <span class="shot__accent">always one glance away</span>', raw: "../raw/capture-session.png", mode: "light" },
+  "2": { caption: 'Know exactly <span class="shot__accent">when your session resets</span>', raw: "../raw/capture-session.png", mode: "light" },
+  "3": { caption: 'Track <span class="shot__accent">weekly limits</span> across models', raw: "../raw/capture-weekly.png", mode: "light" },
+  "4": { caption: 'Looks right in <span class="shot__accent">light and dark</span>', raw: "../raw/capture-dark.png", mode: "dark" },
+  "5": { caption: 'One click to pop it out — <span class="shot__accent">floats above everything</span>', raw: "../raw/capture-button.png", mode: "light" }
+};
+function mockHTML(mode) {
+  return `<div class="mock" data-mode="${mode}">
+    <div class="mock__title">Current session</div>
+    <div class="mock__sub">Resets in 2h 14m</div>
+    <div class="mock__row"><div class="mock__bar"><div class="mock__fill" style="width:54%"></div></div></div>
+    <div class="mock__row"><div class="mock__row-head"><span>All models</span><span>34%</span></div><div class="mock__bar"><div class="mock__fill" style="width:34%"></div></div></div>
+    <div class="mock__row"><div class="mock__row-head"><span>Sonnet only</span><span>8%</span></div><div class="mock__bar"><div class="mock__fill" style="width:8%"></div></div></div>
+  </div>`;
+}
+const shot = new URLSearchParams(location.search).get("shot") || "1";
+const cfg = SHOTS[shot] || SHOTS["1"];
+document.getElementById("caption").innerHTML = cfg.caption;
+const device = document.getElementById("device");
+const img = new Image();
+img.alt = "Claude Usage Widget";
+img.onload = () => { device.classList.remove("is-mock"); device.replaceChildren(img); };
+img.onerror = () => { device.classList.add("is-mock"); device.innerHTML = mockHTML(cfg.mode); };
+img.src = cfg.raw;
+</script>
+</body>
+</html>
