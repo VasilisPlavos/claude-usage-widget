@@ -1,3 +1,4 @@
+import { ENV } from "./ENV.js";
 import { fetchOrgId, fetchUsage } from "./usage-api.js";
 import { mountWidget, renderUsage, renderMessage } from "./widget.js";
 import { readClaudePalette, applyPalette, observeTheme } from "./theme.js";
@@ -24,7 +25,7 @@ async function refresh() {
     if (!card) return;
     renderUsage(card, lastData);
   } catch (err) {
-    console.error("[Claude Usage Widget Lite] refresh failed:", err);
+    console.error(`[${ENV.AppTitle}] refresh failed:`, err);
     if (!card) return;
     const msg = String(err && err.message);
     if (/HTTP 401/.test(msg)) {
@@ -66,7 +67,7 @@ async function open() {
   if (pipWindow) { pipWindow.focus(); return; }
   if (opening) return;
   if (!("documentPictureInPicture" in window)) {
-    console.warn("[Claude Usage Widget Lite] Document PiP unsupported in this browser.");
+    console.warn(`[${ENV.AppTitle}] Document PiP unsupported in this browser.`);
     return;
   }
   opening = true;
@@ -85,7 +86,7 @@ async function open() {
     await refresh();
     startTimers();
   } catch (err) {
-    console.error("[Claude Usage Widget Lite] open failed:", err);
+    console.error(`[${ENV.AppTitle}] open failed:`, err);
     card = null;
     pipWindow = null;
     setButtonActive(false);
@@ -108,4 +109,4 @@ document.addEventListener("visibilitychange", () => {
 injectButton(toggle);
 initInlineButton(toggle);
 window.claudeUsageWidgetLite = { open, close, toggle };
-console.log("[Claude Usage Widget Lite] ready");
+console.log(`[${ENV.AppTitle}] ready`);

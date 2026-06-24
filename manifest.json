@@ -28,6 +28,7 @@
     {
       "resources": [
         "src/content.js",
+        "src/ENV.js",
         "src/usage-api.js",
         "src/format.js",
         "src/widget.js",

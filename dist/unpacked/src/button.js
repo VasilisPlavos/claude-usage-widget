@@ -1,3 +1,5 @@
+import { ENV } from "./ENV.js";
+
 const BUTTON_ID = "claude-usage-widget-lite-button";
 
 export function injectButton(onClick) {
@@ -5,7 +7,7 @@ export function injectButton(onClick) {
   const btn = document.createElement("button");
   btn.id = BUTTON_ID;
   btn.type = "button";
-  btn.title = "Toggle Claude Usage Widget Lite";
+  btn.title = `Toggle ${ENV.AppTitle}`;
   btn.textContent = "Usage Widget Lite";
   Object.assign(btn.style, {
     position: "fixed", right: "16px", bottom: "16px", zIndex: "2147483647",
