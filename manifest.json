@@ -36,7 +36,8 @@
         "src/widget.js",
         "src/widget.css.js",
         "src/theme.js",
-        "src/button.js"
+        "src/button.js",
+        "src/inline-button.js"
       ],
       "matches": [
         "https://claude.ai/*"

@@ -61,12 +61,15 @@ function startObserver(onToggle) {
 
 export function initInlineButton(onToggle) {
   let observer = null;
+  let pendingTimer = null;
 
   function activate() {
     observer = startObserver(onToggle);
   }
 
   function deactivate() {
+    clearTimeout(pendingTimer);
+    pendingTimer = null;
     observer?.disconnect();
     observer = null;
     removeBtn();
@@ -75,11 +78,11 @@ export function initInlineButton(onToggle) {
   if (location.pathname === USAGE_PATH) activate();
 
   window.navigation?.addEventListener("navigate", (e) => {
-    const path = new URL(e.destination.url).pathname;
+    let path;
+    try { path = new URL(e.destination.url).pathname; } catch { return; }
     deactivate();
     if (path === USAGE_PATH) {
-      // Delay to let React render the new route's content.
-      setTimeout(activate, 150);
+      pendingTimer = setTimeout(activate, 150);
     }
   });
 }
