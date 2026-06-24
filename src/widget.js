@@ -33,13 +33,7 @@ export function renderUsage(card, data, now = new Date()) {
     if (data.session.resetsAt) {
       parts.push('<div class="cu-sub">' + formatResetCountdown(data.session.resetsAt, now) + "</div>");
     }
-    parts.push(
-      '<div class="cu-row">' +
-        '<div class="cu-row-head"><span class="cu-row-label"></span>' +
-        '<span class="cu-row-pct">' + data.session.pct + "%</span></div>" +
-        '<div class="cu-bar"><div class="cu-bar-fill" style="width:' + data.session.pct + '%"></div></div>' +
-      "</div>"
-    );
+    parts.push(barRow("", data.session.pct));
   }
   if (data.allModels) parts.push(barRow("All models", data.allModels.pct));
   if (data.sonnet) parts.push(barRow("Sonnet only", data.sonnet.pct));

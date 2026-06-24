@@ -1,9 +1,11 @@
 const CLAUDE_MATCH = "https://claude.ai/*";
+let pendingTabId = null;
 
 chrome.action.onClicked.addListener(async (activeTab) => {
   const target = await pickClaudeTab(activeTab);
   if (!target) {
-    await chrome.tabs.create({ url: "https://claude.ai/new" });
+    const tab = await chrome.tabs.create({ url: "https://claude.ai/new" });
+    pendingTabId = tab.id;
     await flashBadge("↻", "Click the icon again to show usage");
     return;
   }
@@ -15,6 +17,13 @@ chrome.action.onClicked.addListener(async (activeTab) => {
     });
   } catch (e) {
     console.error("[Claude Usage PiP] executeScript failed:", e);
+  }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (tabId === pendingTabId) {
+    pendingTabId = null;
+    clearBadge();
   }
 });
 
