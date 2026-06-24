@@ -22,6 +22,7 @@ function injectBtn(headingEl, onToggle) {
   btn.id = INLINE_BTN_ID;
   btn.type = "button";
   btn.title = "Open in Picture-in-Picture";
+  btn.setAttribute("aria-label", "Open in Picture-in-Picture");
   btn.innerHTML = PIP_SVG;
   Object.assign(btn.style, {
     display: "inline-flex",
@@ -73,7 +74,7 @@ export function initInlineButton(onToggle) {
 
   if (location.pathname === USAGE_PATH) activate();
 
-  navigation.addEventListener("navigate", (e) => {
+  window.navigation?.addEventListener("navigate", (e) => {
     const path = new URL(e.destination.url).pathname;
     deactivate();
     if (path === USAGE_PATH) {
