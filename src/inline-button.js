@@ -8,8 +8,11 @@ const PIP_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xml
 </svg>`;
 
 function findHeading() {
-  for (const el of document.querySelectorAll("h1,h2,h3,h4")) {
-    if (el.textContent.trim().startsWith("Current session")) return el;
+  for (const el of document.querySelectorAll("h1,h2,h3,h4,span")) {
+    if (el.textContent.trim() === "Current session") {
+      const parent = el.parentElement;
+      return (parent && parent.tagName === "DIV") ? parent : el;
+    }
   }
   return null;
 }
@@ -35,14 +38,12 @@ function injectBtn(headingEl, onToggle) {
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "6px",
     padding: "2px",
     border: "none",
     background: "transparent",
     color: "hsl(var(--text-100, 0 0% 7%))",
     cursor: "pointer",
     opacity: "0.45",
-    verticalAlign: "middle",
     transition: "opacity 0.15s",
     borderRadius: "4px",
   });
