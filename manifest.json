@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Claude Usage PiP",
+  "name": "Claude Usage Widget Lite",
   "version": "1.0.0",
   "description": "Floating picture-in-picture widget showing your claude.ai usage.",
   "minimum_chrome_version": "116",
   "action": {
-    "default_title": "Toggle Claude usage widget"
+    "default_title": "Toggle Claude Usage Widget Lite"
   },
   "background": {
     "service_worker": "src/background.js"

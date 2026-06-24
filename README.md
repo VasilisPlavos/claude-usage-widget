@@ -1,4 +1,4 @@
-# Claude Usage PiP
+# Claude Usage Widget Lite
 
 A Chrome extension that shows your claude.ai usage in a small floating
 (Document Picture-in-Picture) widget: current session, weekly "All models",
