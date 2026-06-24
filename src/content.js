@@ -71,7 +71,7 @@ async function open() {
   }
   opening = true;
   try {
-    const win = await documentPictureInPicture.requestWindow({ width: 280, height: 200 });
+    const win = await documentPictureInPicture.requestWindow({ width: 240, height: 180 });
     win.addEventListener("pagehide", handlePipClosed);
     const ui = mountWidget(win.document);
     card = ui.card;
