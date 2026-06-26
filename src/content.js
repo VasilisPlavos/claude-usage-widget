@@ -2,7 +2,7 @@ import { ENV } from "./ENV.js";
 import { fetchOrgId, fetchUsage } from "./usage-api.js";
 import { mountWidget, renderUsage, renderMessage } from "./widget.js";
 import { readClaudePalette, applyPalette, observeTheme } from "./theme.js";
-import { injectButton, setButtonActive } from "./button.js";
+import { injectButton, setButtonActive, pulseButton } from "./button.js";
 import { initInlineButton, setInlineButtonActive } from "./inline-button.js";
 
 const POLL_MS = 60000;
@@ -109,4 +109,12 @@ document.addEventListener("visibilitychange", () => {
 injectButton(toggle);
 initInlineButton(toggle);
 window.claudeUsageWidgetLite = { open, close, toggle };
+
+// Toolbar click → background opens a fresh tab and sends a summon. PiP needs an
+// in-page gesture, so we pulse the button to invite the click that opens it.
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg?.type === "cuw-summon") pulseButton();
+});
+chrome.runtime.sendMessage({ type: "cuw-content-ready" }).catch(() => {});
+
 console.log(`[${ENV.AppTitle}] ready`);
