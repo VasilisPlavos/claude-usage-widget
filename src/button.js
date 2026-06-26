@@ -27,3 +27,36 @@ export function setButtonActive(active) {
   const btn = document.getElementById(BUTTON_ID);
   if (btn) btn.style.opacity = active ? "1" : "0.85";
 }
+
+const PULSE_KEYFRAMES = [
+  { transform: "scale(1)", boxShadow: "0 2px 8px rgba(0,0,0,.15)" },
+  {
+    transform: "scale(1.12)",
+    boxShadow: "0 0 0 6px hsl(var(--accent-pro-100, 248 67% 63%) / 0.35), 0 2px 8px rgba(0,0,0,.15)",
+  },
+  { transform: "scale(1)", boxShadow: "0 2px 8px rgba(0,0,0,.15)" },
+];
+
+// Draw the eye to the floating button after a toolbar "summon": PiP needs a real
+// in-page click, so we can only invite one. Pulse stops on click (the click then
+// opens the widget) or after it runs its course.
+export function pulseButton() {
+  const btn = document.getElementById(BUTTON_ID);
+  if (!btn) return;
+  if (btn._cuwStopPulse) btn._cuwStopPulse(false);
+
+  btn.style.opacity = "1";
+  const anim = btn.animate(PULSE_KEYFRAMES, { duration: 900, iterations: 2, easing: "ease-in-out" });
+
+  const stop = (restoreRest) => {
+    btn._cuwStopPulse = null;
+    btn.removeEventListener("click", onClick);
+    anim.onfinish = null;
+    anim.cancel();
+    if (restoreRest) btn.style.opacity = "0.85";
+  };
+  const onClick = () => stop(false); // user clicked: open() now owns the opacity
+  btn._cuwStopPulse = stop;
+  btn.addEventListener("click", onClick);
+  anim.onfinish = () => stop(true); // ran its course untouched: return to rest
+}
