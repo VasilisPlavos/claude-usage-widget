@@ -1,1 +1,0 @@
-I kept refreshing Claude's usage page to dodge limits — so I built a floating gauge that keeps it always in view.
