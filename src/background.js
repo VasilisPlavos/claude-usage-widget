@@ -1,3 +1,6 @@
+import { shouldOpenWhatsNew } from "./whatsnew.js";
+import { CHANGELOG } from "./whatsnew-data.js";
+
 const CLAUDE_NEW = "https://claude.ai/new";
 const SUMMON = { type: "cuw-summon" };
 
@@ -25,3 +28,24 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 });
 
 chrome.tabs.onRemoved.addListener((tabId) => pendingSummons.delete(tabId));
+
+// On update (not install), open the What's New page when there is changelog
+// content newer than the user's previous version and they haven't opted out.
+// Chrome provides previousVersion, so no "last seen version" needs storing.
+chrome.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
+  console.log("[cuw] onInstalled:", reason, previousVersion); // dev aid in SW console
+  let optedOut = false;
+  try {
+    const stored = await chrome.storage.local.get("whatsNewOptOut");
+    optedOut = stored.whatsNewOptOut === true;
+  } catch (e) {
+    console.error("[cuw] optout read failed:", e);
+  }
+  if (!shouldOpenWhatsNew({ reason, previousVersion, optedOut }, CHANGELOG)) return;
+  const url =
+    chrome.runtime.getURL("src/whatsnew.html") +
+    "?since=" + encodeURIComponent(previousVersion);
+  chrome.tabs
+    .create({ url, active: true })
+    .catch((e) => console.error("[cuw] whatsnew open failed:", e));
+});
