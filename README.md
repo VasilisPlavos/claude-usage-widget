@@ -65,8 +65,7 @@ browser-dependent parts are verified with the manual checklist below.
 - [ ] With no claude.ai tab, toolbar click opens one + badges; second click opens widget.
 - [ ] Cross-tab: with the widget floating and a non-claude tab active, the toolbar icon still toggles it.
 - [ ] Footer shows a status dot + description (green when operational).
-- [ ] Hovering/focusing the footer opens the incident overlay upward.
-- [ ] During an incident, the verbatim incident name + message are shown.
+- [ ] During an incident, hovering/focusing the footer opens the overlay upward with the verbatim incident name + message.
 - [ ] Status dot colors are legible in both light and dark themes.
 - [ ] When "All models" is maxed but Sonnet has room, the "✓ still available" hint appears on the Sonnet row.
 - [ ] If the status fetch fails, the footer shows a gray dot + "Status unavailable" and the usage bars are unaffected.
