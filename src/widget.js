@@ -1,6 +1,7 @@
 import { WIDGET_CSS } from "./widget.css.js";
 import { formatResetCountdown, escapeHtml } from "./format.js";
 import { statusDotClass } from "./status-api.js";
+import { shouldSuggestSonnet } from "./usage-api.js";
 
 export function mountWidget(pipDocument) {
   const style = pipDocument.createElement("style");
@@ -29,6 +30,20 @@ function barRow(label, pct) {
   );
 }
 
+function sonnetRow(pct, hint) {
+  const badge = hint ? ' <span class="cu-hint">✓ still available</span>' : "";
+  const fillClass = hint ? "cu-bar-fill cu-bar-fill--alt" : "cu-bar-fill";
+  return (
+    '<div class="cu-row">' +
+      '<div class="cu-row-head">' +
+        '<span class="cu-row-label">Sonnet only' + badge + "</span>" +
+        '<span class="cu-row-pct">' + pct + "%</span>" +
+      "</div>" +
+      '<div class="cu-bar"><div class="' + fillClass + '" style="width:' + pct + '%"></div></div>' +
+    "</div>"
+  );
+}
+
 export function renderUsage(card, data, now = new Date()) {
   const parts = [];
   if (data.session) {
@@ -39,7 +54,7 @@ export function renderUsage(card, data, now = new Date()) {
     parts.push(barRow("", data.session.pct));
   }
   if (data.allModels) parts.push(barRow("All models", data.allModels.pct));
-  if (data.sonnet) parts.push(barRow("Sonnet only", data.sonnet.pct));
+  if (data.sonnet) parts.push(sonnetRow(data.sonnet.pct, shouldSuggestSonnet(data)));
   if (!parts.length) { renderMessage(card, "No usage data available."); return; }
   card.innerHTML = parts.join("");
 }

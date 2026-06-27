@@ -56,4 +56,6 @@ body {
 .cu-incident + .cu-incident { margin-top: 8px; }
 .cu-incident-name { font-weight: 600; font-size: 11px; color: var(--cu-text); }
 .cu-incident-body { font-size: 11px; color: var(--cu-muted); margin-top: 2px; word-break: break-word; }
+.cu-hint { color: hsl(145 63% 38%); font-weight: 600; }
+.cu-bar-fill--alt { background: hsl(145 63% 42%); }
 `;
