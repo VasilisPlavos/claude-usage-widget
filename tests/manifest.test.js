@@ -35,3 +35,8 @@ test("every declared manifest icon path exists and is a PNG", () => {
     assert.ok(head.equals(PNG_MAGIC), `not a PNG: ${rel}`);
   }
 });
+
+test("status-api.js is web-accessible", () => {
+  const res = manifest.web_accessible_resources[0].resources;
+  assert.ok(res.includes("src/status-api.js"));
+});

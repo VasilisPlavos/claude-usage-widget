@@ -1,6 +1,7 @@
 import { ENV } from "./ENV.js";
 import { fetchOrgId, fetchUsage } from "./usage-api.js";
-import { mountWidget, renderUsage, renderMessage } from "./widget.js";
+import { fetchStatus } from "./status-api.js";
+import { mountWidget, renderUsage, renderStatus, renderMessage } from "./widget.js";
 import { readClaudePalette, applyPalette, observeTheme } from "./theme.js";
 import { injectButton, setButtonActive, pulseButton } from "./button.js";
 import { initInlineButton, setInlineButtonActive } from "./inline-button.js";
@@ -9,6 +10,8 @@ const POLL_MS = 60000;
 
 let pipWindow = null;
 let card = null;
+let statusEl = null;
+let lastStatus = null;
 let orgId = null;
 let lastData = null;
 let pollTimer = null;
@@ -18,6 +21,10 @@ let opening = false;
 
 async function refresh() {
   if (!pipWindow || !card) return;
+  await Promise.all([refreshUsage(), refreshStatus()]);
+}
+
+async function refreshUsage() {
   try {
     if (!orgId) orgId = await fetchOrgId();
     if (!card) return;
@@ -35,6 +42,17 @@ async function refresh() {
       renderMessage(card, "Couldn't load usage. Retrying…");
     }
   }
+}
+
+async function refreshStatus() {
+  if (!statusEl) return;
+  try {
+    lastStatus = await fetchStatus();
+  } catch (err) {
+    console.error(`[${ENV.AppTitle}] status failed:`, err);
+    lastStatus = { indicator: "unknown", description: "Status unavailable", incidents: [] };
+  }
+  if (statusEl) renderStatus(statusEl, lastStatus);
 }
 
 function syncTheme() {
@@ -58,6 +76,8 @@ function handlePipClosed() {
   if (stopThemeObserver) { stopThemeObserver(); stopThemeObserver = null; }
   pipWindow = null;
   card = null;
+  statusEl = null;
+  lastStatus = null;
   orgId = null;
   setButtonActive(false);
   setInlineButtonActive(false);
@@ -72,10 +92,11 @@ async function open() {
   }
   opening = true;
   try {
-    const win = await documentPictureInPicture.requestWindow({ width: 240, height: 180 });
+    const win = await documentPictureInPicture.requestWindow({ width: 240, height: 200 });
     win.addEventListener("pagehide", handlePipClosed);
     const ui = mountWidget(win.document);
     card = ui.card;
+    statusEl = ui.status;
     ui.closeBtn.addEventListener("click", close);
     applyPalette(win.document, readClaudePalette());
     stopThemeObserver = observeTheme(syncTheme);

@@ -42,6 +42,7 @@
         "src/content.js",
         "src/ENV.js",
         "src/usage-api.js",
+        "src/status-api.js",
         "src/format.js",
         "src/widget.js",
         "src/widget.css.js",
