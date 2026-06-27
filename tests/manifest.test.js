@@ -40,3 +40,11 @@ test("status-api.js is web-accessible", () => {
   const res = manifest.web_accessible_resources[0].resources;
   assert.ok(res.includes("src/status-api.js"));
 });
+
+test("background service worker is an ES module", () => {
+  assert.equal(manifest.background.type, "module");
+});
+
+test("declares the storage permission", () => {
+  assert.ok((manifest.permissions ?? []).includes("storage"), "missing storage permission");
+});
