@@ -8,3 +8,11 @@ export function formatResetCountdown(resetsAt, now = new Date()) {
   const mins = totalMin % 60;
   return mins === 0 ? `Resets in ${hrs} hr` : `Resets in ${hrs} hr ${mins} min`;
 }
+
+export function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}

@@ -32,4 +32,30 @@ body {
   position: absolute; top: 6px; right: 8px; border: 0; background: transparent;
   color: var(--cu-muted); font-size: 15px; cursor: pointer; line-height: 1; padding: 4px;
 }
+.cu-status {
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--cu-track);
+  font-size: 11px; color: var(--cu-muted); position: relative; outline: none;
+}
+.cu-status-head { display: flex; align-items: center; gap: 6px; }
+.cu-dot { width: 8px; height: 8px; border-radius: 999px; flex: none; background: var(--cu-muted); }
+.cu-dot--ok { background: hsl(145 63% 42%); }
+.cu-dot--minor { background: hsl(45 90% 51%); }
+.cu-dot--major { background: hsl(28 90% 53%); }
+.cu-dot--critical { background: hsl(0 75% 55%); }
+.cu-dot--unknown { background: var(--cu-muted); }
+.cu-status-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cu-status-detail {
+  display: none; position: absolute; left: 0; right: 0; bottom: 100%;
+  margin-bottom: 6px; padding: 8px 10px; background: var(--cu-surface); color: var(--cu-text);
+  border: 1px solid var(--cu-track); border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18); max-height: 140px; overflow-y: auto;
+}
+.cu-status:hover .cu-status-detail,
+.cu-status:focus .cu-status-detail,
+.cu-status:focus-within .cu-status-detail { display: block; }
+.cu-incident + .cu-incident { margin-top: 8px; }
+.cu-incident-name { font-weight: 600; font-size: 11px; color: var(--cu-text); }
+.cu-incident-body { font-size: 11px; color: var(--cu-muted); margin-top: 2px; word-break: break-word; }
+.cu-hint { color: hsl(145 63% 38%); font-weight: 600; }
+.cu-bar-fill--alt { background: hsl(145 63% 42%); }
 `;

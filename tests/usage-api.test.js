@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseUsage } from "../src/usage-api.js";
+import { parseUsage, shouldSuggestSonnet } from "../src/usage-api.js";
 
 const sample = {
   five_hour: { utilization: 54, resets_at: "2026-06-23T13:59:59.74Z" },
@@ -35,4 +35,31 @@ test("clamps utilization to 0..100", () => {
 test("ignores a bucket without numeric utilization", () => {
   const u = parseUsage({ five_hour: { utilization: "x" } });
   assert.equal(u.session, null);
+});
+
+const usage = (allModels, sonnet) => ({
+  session: { pct: 10 },
+  allModels: allModels == null ? null : { pct: allModels },
+  sonnet: sonnet == null ? null : { pct: sonnet },
+});
+
+test("suggests Sonnet when all-models maxed and Sonnet has room", () => {
+  assert.equal(shouldSuggestSonnet(usage(96, 40)), true);
+});
+
+test("at the exact thresholds it still suggests", () => {
+  assert.equal(shouldSuggestSonnet(usage(95, 80)), true);
+});
+
+test("no suggestion when all-models below threshold", () => {
+  assert.equal(shouldSuggestSonnet(usage(90, 10)), false);
+});
+
+test("no suggestion when Sonnet is also high", () => {
+  assert.equal(shouldSuggestSonnet(usage(99, 85)), false);
+});
+
+test("no suggestion when a bucket is missing", () => {
+  assert.equal(shouldSuggestSonnet(usage(99, null)), false);
+  assert.equal(shouldSuggestSonnet(usage(null, 10)), false);
 });

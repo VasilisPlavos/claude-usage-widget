@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatResetCountdown } from "../src/format.js";
+import { formatResetCountdown, escapeHtml } from "../src/format.js";
 
 const base = new Date("2026-06-23T12:00:00Z");
 const inMin = (m) => new Date(base.getTime() + m * 60000);
@@ -25,4 +25,15 @@ test("already passed", () => {
 });
 test("exactly at reset", () => {
   assert.equal(formatResetCountdown(base, base), "Resetting…");
+});
+
+test("escapes angle brackets, ampersand and quotes", () => {
+  assert.equal(
+    escapeHtml('<img src=x onerror="alert(1)"> & done'),
+    "&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; done"
+  );
+});
+
+test("non-string input is coerced", () => {
+  assert.equal(escapeHtml(42), "42");
 });
