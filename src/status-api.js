@@ -28,3 +28,13 @@ export async function fetchStatus() {
   if (!res.ok) throw new Error(`status HTTP ${res.status}`);
   return parseStatus(await res.json());
 }
+
+export function statusDotClass(indicator) {
+  switch (indicator) {
+    case "none": return "cu-dot--ok";
+    case "minor": return "cu-dot--minor";
+    case "major": return "cu-dot--major";
+    case "critical": return "cu-dot--critical";
+    default: return "cu-dot--unknown";
+  }
+}

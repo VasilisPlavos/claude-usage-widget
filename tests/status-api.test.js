@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { parseStatus } from "../src/status-api.js";
+import { parseStatus, statusDotClass } from "../src/status-api.js";
 
 const operational = {
   status: { indicator: "none", description: "All Systems Operational" },
@@ -65,4 +65,13 @@ test("null json becomes unknown", () => {
 test("unrecognized indicator becomes unknown", () => {
   const s = parseStatus({ status: { indicator: "weird", description: "?" } });
   assert.equal(s.indicator, "unknown");
+});
+
+test("maps indicators to dot classes", () => {
+  assert.equal(statusDotClass("none"), "cu-dot--ok");
+  assert.equal(statusDotClass("minor"), "cu-dot--minor");
+  assert.equal(statusDotClass("major"), "cu-dot--major");
+  assert.equal(statusDotClass("critical"), "cu-dot--critical");
+  assert.equal(statusDotClass("unknown"), "cu-dot--unknown");
+  assert.equal(statusDotClass("anything-else"), "cu-dot--unknown");
 });
