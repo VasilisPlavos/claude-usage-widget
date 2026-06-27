@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const T = join(ROOT, "marketing/templates");
+const T = join(ROOT, "files/marketing/templates");
 
 const TEMPLATES = [
   ["screenshot.html", 1280, 800],
