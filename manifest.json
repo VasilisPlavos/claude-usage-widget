@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Claude Usage Widget Lite",
   "version": "1.1.0",
-  "description": "Floating picture-in-picture widget showing your claude.ai usage.",
+  "description": "Floating widget for your claude.ai usage — session & weekly limits, reset countdown, and live Claude service status.",
   "minimum_chrome_version": "116",
   "icons": {
     "16": "src/icon/icon-16.png",
