@@ -69,3 +69,9 @@ browser-dependent parts are verified with the manual checklist below.
 - [ ] Status dot colors are legible in both light and dark themes.
 - [ ] When "All models" is maxed but Sonnet has room, the "✓ still available" hint appears on the Sonnet row.
 - [ ] If the status fetch fails, the footer shows a gray dot + "Status unavailable" and the usage bars are unaffected.
+- [ ] After an update (bump `manifest.json` version + prepend a `src/whatsnew-data.js` entry, then Reload in `chrome://extensions`), a "What's New" tab opens, newest first, with a "New" badge on entries newer than the previous version.
+- [ ] Reloading with **no** new changelog entry does NOT open the page.
+- [ ] On a fresh install (remove + load unpacked) the page does NOT open.
+- [ ] Checking "Don't show this automatically on updates" suppresses the page on the next update; unchecking re-enables it.
+- [ ] Opening `src/whatsnew.html` directly (no `?since=`) shows the full changelog with no "New" badges.
+- [ ] The What's New page is legible in both light and dark themes.

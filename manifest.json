@@ -20,7 +20,8 @@
     }
   },
   "background": {
-    "service_worker": "src/background.js"
+    "service_worker": "src/background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
@@ -32,6 +33,9 @@
       ],
       "run_at": "document_idle"
     }
+  ],
+  "permissions": [
+    "storage"
   ],
   "host_permissions": [
     "https://claude.ai/*"
