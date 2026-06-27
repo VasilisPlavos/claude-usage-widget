@@ -31,3 +31,12 @@ export async function fetchUsage(orgId) {
   if (!res.ok) throw new Error(`usage HTTP ${res.status}`);
   return parseUsage(await res.json());
 }
+
+export const SONNET_HINT = { allModelsMin: 95, sonnetMax: 80 };
+
+export function shouldSuggestSonnet(usage) {
+  const a = usage && usage.allModels;
+  const s = usage && usage.sonnet;
+  if (!a || !s) return false;
+  return a.pct >= SONNET_HINT.allModelsMin && s.pct <= SONNET_HINT.sonnetMax;
+}
